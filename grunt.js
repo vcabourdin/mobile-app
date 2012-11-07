@@ -35,11 +35,11 @@ module.exports = function(grunt) {
     //
     // The concat task depends on this file to exist, so if you decide to
     // remove this, ensure concat is updated accordingly.
-    jst: {
-      "dist/debug/templates.js": [
-        "app/templates/**/*.html"
-      ]
-    },
+//    /*jst: {
+//      "dist/debug/templates.js": [
+//        "app/templates*//***/*//*.html"
+//      ]
+//    },*/
 
     // The handlebars task compiles all application templates into JavaScript
     // functions using Handlebars templating engine.
@@ -82,7 +82,7 @@ module.exports = function(grunt) {
     },
 
     // The stylus task is used to compile Stylus stylesheets into a single
-    // CSS file for debug and release deployments.  
+    // CSS file for debug and release deployments.
     stylus: {
       // Put all your CSS files here, order matters!
       files: [
@@ -94,7 +94,7 @@ module.exports = function(grunt) {
       compile: {
         // Used for @imports.
         options: { paths: ["assets/css"] },
-        
+
         files: {
           "dist/debug/index.css": "<config:stylus.files>"
         }
@@ -107,7 +107,7 @@ module.exports = function(grunt) {
       dev: {
         // Used for @imports.
         options: { paths: ["assets/css"] },
-        
+
         files: {
           "assets/css/index.css": "<config:stylus.files>"
         }

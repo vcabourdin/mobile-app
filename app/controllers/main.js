@@ -1,22 +1,42 @@
 define([
-    "underscore"
+    "underscore",
+    "controllers/index",
+    "text!templates/layouts/main.html",
+    "options",
+    "app"
 ],
-    function (_) {
+    function (_, indexController, mainTemplate, options, App) {
         'use strict';
-        var controller = function () {
-        };
 
-        _.extend(controller.prototype, {
-            start:function () {
-                console.log('controller start');
+        var controller = {
+            initialize:function () {
+                App.addRegions({
+                    mainRegion: "#" + options.mainLayoutId
+                });
+
+                var mainLayout = Backbone.Marionette.Layout.extend({
+                    template: mainTemplate,
+
+                    regions: {
+                        appHeader: "#app-header",
+                        appContent: "#app-content",
+                        appFooter: "#app-footer"
+                    }
+                });
+                
+                var layout = new mainLayout();
+                
+                App.mainRegion.show(layout);
+//                App.mainRegion.layout = layout;
+                console.log('mainController',App);
             },
             index:function () {
-                console.log('action index');
+                indexController.initialize();
             },
             toto:function () {
                 console.log('action toto');
             }
-        });
+        };
 
         return controller;
     });

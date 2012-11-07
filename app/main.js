@@ -2,36 +2,53 @@ require([
     "backbone",
     "marionette",
     "app",
-    "options"
+    "options",
+    "controllers/main",
+    "router",
+    "handlebars",
+    "modules/utils",
+    "domready!"
 ],
-    function (Backbone, Marionette, App, Options) {
+    function (Backbone, Marionette, App, Options, Controller, Router, Handlebars, Utils,  Domready) {
         'use strict';
         console.log('main app start');
+
+        //Enable handlebars support for pre compiled templates
+        Backbone.Marionette.TemplateCache.prototype.compileTemplate = function (rawTemplate) {
+            return Handlebars.compile(rawTemplate);
+        };
+
+        //Triggered before initialisation
+        App.on("initialize:before", function (options) {
+            console.log('app before');
+        });
+
+        //Initialisation
+        App.addInitializer(function () {
+            console.log('app init');
+        });
+
+        //Triggered after initialisation
+        App.on("initialize:after", function (options) {
+            console.log('app after');
+
+            //Main controller initialisation
+            Controller.initialize();
+
+            //Router initialisation
+            App.router = new Router({
+                controller:Controller
+            });
+
+            //Backbone history initialisation
+            if (Backbone.history) {
+                Backbone.history.start();
+            }
+
+            //Bind link navigation
+            Utils.bindNavigate();
+        });
+
+        //Start the application
         App.start(Options);
-
-// All navigation that is relative should be passed through the navigate
-// method, to be processed by the router. If the link has a `data-bypass`
-// attribute, bypass the delegation completely.
-//        $(document).on("click", "a:not([data-bypass])", function(evt) {
-//            // Get the absolute anchor href.
-//            var href = {
-//                prop: $(this).prop("href"),
-//                attr: $(this).attr("href")
-//            };
-//            // Get the absolute root.
-//            var root = location.protocol + "//" + location.host + app.root;
-//
-//            // Ensure the root is part of the anchor href, meaning it's relative.
-//            if (href.prop && href.prop.slice(0, root.length) === root) {
-//                // Stop the default event to ensure the link will not cause a page
-//                // refresh.
-//                evt.preventDefault();
-//
-//                // `Backbone.history.navigate` is sufficient for all Routers and will
-//                // trigger the correct events. The Router's internal `navigate` method
-//                // calls this anyways.  The fragment is sliced from the root.
-//                Backbone.history.navigate(href.attr, true);
-//            }
-//        });
-
     });

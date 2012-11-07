@@ -2,11 +2,11 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    '../models/item'
+    'modules/quiz/models/item'
     ], function($, _, Backbone, Item){
         var Items = Backbone.Collection.extend({
             model: Item,
-            url: "",
+            url: "data/items.json",
             parse: function(data) {
                 return data.results;
             },

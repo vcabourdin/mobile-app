@@ -1,54 +1,67 @@
-test("one tautology", function() {
-  ok(true);
-});
+define(
+    [
+    "app"
+    ],
+    function (App) {
+        return {
+            RunTests: function () {
+                module("Example 1");
+            
+                test("one tautology", function() {
+                    ok(true);
+                });
 
-module("simple tests");
+                module("simple tests");
 
-test("increments", function() {
-  var mike = 0;
+                test("increments", function() {
+                    var mike = 0;
 
-  ok(mike++ === 0);
-  ok(mike === 1);
-});
+                    ok(mike++ === 0);
+                    ok(mike === 1);
+                });
 
-test("increments (improved)", function() {
-  var mike = 0;
+                test("increments (improved)", function() {
+                    var mike = 0;
 
-  equal(mike++, 0);
-  equal(mike, 1);
-});
+                    equal(mike++, 0);
+                    equal(mike, 1);
+                });
 
 
-module("setUp/tearDown", {
-  setup: function() {
-    //console.log("Before");
-  },
+                module("setUp/tearDown", {
+                    setup: function() {
+                    //console.log("Before");
+                    },
 
-  teardown: function() {
-    //console.log("After");
-  }
-});
+                    teardown: function() {
+                    //console.log("After");
+                    }
+                });
 
-test("example", function() {
-  //console.log("During");
-});
+                test("example", function() {
+                    //console.log("During");
+                    });
 
-module("async");
+                module("async");
 
-test("multiple async", function() {
-  expect(2);
+                test("multiple async", function() {
+                    expect(2);
 
-  stop();
+                    stop();
 
-  setTimeout( function( ) {
-    ok(true, "async operation completed");
-    start();
-  }, 500);
+                    setTimeout( function( ) {
+                        ok(true, "async operation completed");
+                        start();
+                    }, 500);
 
-  stop();
+                    stop();
 
-  setTimeout(function() {
-    ok(true, "async operation completed");
-    start();
-  }, 500);
-});
+                    setTimeout(function() {
+                        ok(true, "async operation completed");
+                        start();
+                    }, 500);
+                });
+
+            }
+        };
+    });

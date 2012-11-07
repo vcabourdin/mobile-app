@@ -1,17 +1,29 @@
 define([
-  // Application.
-  "app"
-],
+    "app",
+    "modules/quiz/collections/items",
+    "modules/quiz/views/itemsView",
+    "text!modules/quiz/templates/layouts/main.html",
+    ],
+    function(App, Items, itemsView, mainTemplate) {
+        console.log('module quiz debut');
+        
+        return {
+            initialize:function () {
+                
+                var mainLayout = Backbone.Marionette.Layout.extend({
+                    template: mainTemplate,
 
-// Map dependencies from above array.
-function(app) {
+                    regions: {
+                        quizHeader: "#quiz-header",
+                        quizContent: "#quiz-content",
+                        quizFooter: "#quiz-footer"
+                    }
+                });
 
-  // Create a new module.
-  var Quiz = app.module();
-
-  
-
-  // Return the module for AMD compliance.
-  return Quiz;
-
-});
+                var layout = new mainLayout();
+                
+                layout.quizContent.show(new itemsView());
+                App.mainRegion.currentView.appContent.show(layout);
+            }
+        };         
+    });

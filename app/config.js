@@ -1,35 +1,9 @@
-function readCookie(name) {
-    'use strict';
-
-    var nameEQ,
-        ca,
-        i,
-        c;
-
-    nameEQ = name + "=";
-    ca = document.cookie.split(';');
-
-    for (i = 0; i < ca.length; i = i + 1) {
-        c = ca[i];
-        while (c.charAt(0) === ' ') {
-            c = c.substring(1, c.length);
-        }
-
-        if (c.indexOf(nameEQ) === 0) {
-            return c.substring(nameEQ.length, c.length);
-        }
-    }
-    return null;
-}
-
-
 // Set the require.js configuration for your application.
 require.config({
 
-    // Initialize the application with the main application file.
-    deps:["main"],
+    
 
-    locale:readCookie('locale') || 'en-us',
+    locale:'en-us',
 
     paths:{
         // JavaScript folders.
@@ -48,10 +22,17 @@ require.config({
         marionette:"../assets/js/plugins/backbone/backbone.marionette",
         hbs:"../assets/js/plugins/require/hbs",
         i18n:"../assets/js/plugins/require/i18n",
+        text:"../assets/js/plugins/require/text",
+        domready:"../assets/js/plugins/require/domReady",
+
+        //App folders
+        controllers:"controllers",
+        templates:"templates",
+        modules:"modules",
 
         //App files
         options:"options",
-        controller:"mainController"
+        app:"app"
     },
 
     shim:{
@@ -64,11 +45,23 @@ require.config({
         marionette:{
             deps:["backbone"],
             exports:"Backbone.Marionette"
+        },
+
+        handlebars:{
+            exports:"Handlebars"
         }
     },
 
     // hbs config
     hbs:{
+        disableI18n: true,
         templateExtension:"html"
     }
 });
+
+require([
+    "main"
+    ],
+    function (main) {
+        
+    });
